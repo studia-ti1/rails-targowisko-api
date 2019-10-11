@@ -1,0 +1,3 @@
+class Exhibition < ApplicationRecord
+
+end
