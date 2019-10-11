@@ -25,6 +25,13 @@ gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# authentication
+# UNIVERSITY biblioteka umozliwiajaca uwierzytelnianie uzytkownikow
+gem 'devise'
+# jwt support
+# UNIVERSITY: biblioteka umozliwiajaca generowanie tokenow do REST API przy wsparciu biblioteki devise
+gem 'devise-jwt'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
@@ -38,6 +45,13 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  # UNIVERSITY wygodne testowanie modeli - relacji oraz walidacji
+  gem 'shoulda-matchers'
+  # UNIVERSITY wygodne testowanie - lepsze niz domyślny silnik testów w Rails - minitests
+  gem 'rspec'
 end
 
 
