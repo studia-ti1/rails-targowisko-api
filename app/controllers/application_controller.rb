@@ -1,10 +1,7 @@
 class ApplicationController < ActionController::API
-  include ActionController::HttpAuthentication::Basic::ControllerMethods
-  include ActionController::HttpAuthentication::Token::ControllerMethods
+  include ActionController::MimeResponds
   respond_to :json
-
-  # before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user
+  before_action :authenticate_user, exclude: :destroy
 
   def authenticate_user!(options = {})
     head :unauthorized unless signed_in?
@@ -18,6 +15,16 @@ class ApplicationController < ActionController::API
     @current_user_id.present?
   end
 
+  # DELETE /api/users/logout
+  def logout
+    # possible solution with cron job
+    jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').second, 'secret').first
+    jti = jwt_payload['jti']
+    JwtBlacklist.create!(jti: jti)
+  rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+    render status: :no_content
+  end
+
   private
 
   # def configure_permitted_parameters
@@ -26,14 +33,13 @@ class ApplicationController < ActionController::API
 
   def authenticate_user
     if request.headers['Authorization'].present?
-      # authenticate_or_request_with_http_token do |token|
-        begin
-          jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').second, 'secret').first
-          @current_user_id = jwt_payload['id']
-        rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-          head :unauthorized
-        end
-      # end
+      begin
+        jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').second, 'secret').first
+        head :unauthorized if JwtBlacklist.any? { |obj|  obj.jti == jwt_payload['jti'] }
+        @current_user_id = jwt_payload['id']
+      rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+        head :unauthorized
+      end
   end
   end
 end

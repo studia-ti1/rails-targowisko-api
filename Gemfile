@@ -17,6 +17,7 @@ gem 'puma', '~> 3.11'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
+# UNIVERSITY
 gem 'devise'
 gem 'devise-jwt'
 gem 'jbuilder', '~> 2.5'
