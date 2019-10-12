@@ -1,0 +1,82 @@
+require:
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 2.6.3
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/*'
+    - 'db/schema.rb'
+
+Metrics/LineLength:
+  Max: 180
+
+Metrics/BlockLength:
+  Enabled: true
+  Max: 35
+  Exclude:
+    - spec/**/*
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - 'db/migrate/*'
+
+Metrics/AbcSize:
+  Max: 30
+
+Style/MixinUsage:
+  Exclude:
+    - bin/*
+
+Style/Documentation:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - spec/requests/**/*
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*
+
+RSpec/AnyInstance:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
