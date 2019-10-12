@@ -22,6 +22,9 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'jbuilder', '~> 2.5'
 
+gem 'factory_bot_rails'
+gem 'ffaker'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
