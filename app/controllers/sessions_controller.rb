@@ -1,23 +1,23 @@
-class SessionsController < Devise::SessionsController
-  # respond_to :json
-  respond_to :json
-  # skip_before_action :verify_signed_out_user, only: :destroy
-  # skip_before_action :verify_signed_out_user, only: :destroy
+class SessionsController < ApplicationController
   def create
-    user = User.find_by_email(sign_in_params[:email])
+    user = User.find_by_email(params[:user][:email])
 
-    if user && user.valid_password?(sign_in_params[:password])
+    if user && user.valid_password?(params[:user][:password])
       @current_user = user
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity
     end
   end
 
-
-
-  # private
-  #
-  # def respond_to_on_destroy
-  #   head :ok
-  # end
+   # DELETE /api/users/logout
+   def destroy
+    # possible solution with cron job
+    begin
+      jwt_payload = JwtHelper.decode(token: request.headers['Authorization'].split(' ').second)
+      jti = jwt_payload['jti']
+      JwtBlacklist.create!(jti: jti)
+    rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+      head :no_content
+    end
+  end
 end
