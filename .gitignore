@@ -16,6 +16,8 @@
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+# Ignore .idea folder
+.idea/
 
 .byebug_history
 

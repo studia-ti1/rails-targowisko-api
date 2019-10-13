@@ -1,3 +1,17 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  scope :api do
+    scope :v1 do
+      devise_for :users, skip: [:sessions]
+    end
+  end
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      get 'exhibitions', to: 'exhibitions#index'
+      # we don't need other devise enpoints for now
+      post 'users/login', action: :create, controller: 'sessions'
+      delete 'users/logout', action: :destroy, controller: 'sessions'
+    end
+  end
 end
