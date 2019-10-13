@@ -3,6 +3,7 @@
 module Api
   module V1
     class SessionsController < ApplicationController
+      # TODO: permitted params
       def create
         user = User.find_by(email: params[:user][:email])
 

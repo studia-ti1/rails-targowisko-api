@@ -15,7 +15,7 @@ class ApplicationController < ActionController::API
 
   # custom method for authenticating using jwt
   def authenticate_user
-    return if request.headers['Authorization'].present?
+    return if request.headers['Authorization'].blank?
 
     begin
        jwt_payload = JwtHelper.decode(token: request.headers['Authorization'].split(' ').second)
