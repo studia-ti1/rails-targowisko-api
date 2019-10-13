@@ -6,8 +6,9 @@ module ApiErrorsHandlers
   included do
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
-    # rescue_from JWT::VerificationError, with: :token_error
-    # rescue_from JWT::DecodeError, with: :token_error
+    rescue_from JWT::VerificationError, with: :token_error
+    rescue_from JWT::DecodeError, with: :token_error
+    rescue_from JWT::ExpiredSignature, with: :token_error
 
     private
 
@@ -19,8 +20,8 @@ module ApiErrorsHandlers
       render json: err.record.errors.messages, status: :unprocessable_entity
     end
 
-    # def token_error
-    #   render json: { errors: ['Not Authenticated'] }, status: :unauthorized
-    # end
+    def token_error
+      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+    end
   end
 end

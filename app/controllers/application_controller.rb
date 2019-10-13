@@ -19,12 +19,9 @@ class ApplicationController < ActionController::API
   def authenticate_user
     return if request.headers['Authorization'].blank?
 
-    begin
-       jwt_payload = JwtHelper.decode(token: request.headers['Authorization'].split(' ').second)
-       head :unauthorized if JwtBlacklist.any? { |obj| obj.jti == jwt_payload['jti'] }
-       @current_user_id = jwt_payload['id']
-    rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-      head :unauthorized
-     end
+    jwt_payload = JwtHelper.decode(token: request.headers['Authorization'].split(' ').second)
+
+    head :unauthorized if JwtBlacklist.any? { |obj| obj.jti == jwt_payload['jti'] }
+    @current_user_id = jwt_payload['id']
   end
 end

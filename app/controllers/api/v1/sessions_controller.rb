@@ -17,12 +17,9 @@ module Api
       # DELETE /api/users/logout
       def destroy
         # possible solution with cron job
-
         jwt_payload = JwtHelper.decode(token: request.headers['Authorization'].split(' ').second)
         jti = jwt_payload['jti']
         JwtBlacklist.create!(jti: jti)
-      rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-        head :no_content
       end
     end
   end
