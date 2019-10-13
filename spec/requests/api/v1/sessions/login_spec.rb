@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'POST /api/v1/users/login' do
   subject { post '/api/v1/users/login', params: user_params }
 
-  let!(:user) { create :user, password: Rails.application.secrets.develop_password }
+  let!(:user) { create :user }
 
   let(:user_params) do
     {
