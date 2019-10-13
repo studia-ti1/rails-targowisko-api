@@ -22,7 +22,8 @@ module Authorization
 
       jwt_payload = JwtHelper.decode(token: request.headers['Authorization'].split(' ').second)
 
-      head :unauthorized if JwtBlacklist.any? { |obj| obj.jti == jwt_payload['jti'] }
+      raise JWT::VerificationError if JwtBlacklist.any? { |obj| obj.jti == jwt_payload['jti'] }
+
       @current_user_id = jwt_payload['id']
     end
   end

@@ -32,11 +32,6 @@ describe 'POST /api/v1/users' do
       it 'returns token in response' do
         expect(jwt_decoded.first['id']).to eq User.first.id
       end
-
-      # it 'returns proper HTTP status code' do
-      #   # TODO: wrong
-      #   # expect(response.status).to eq 201
-      # end
     end
 
     context 'during user creation' do

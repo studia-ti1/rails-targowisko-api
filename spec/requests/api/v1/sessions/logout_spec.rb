@@ -6,14 +6,8 @@ describe 'DELETE /api/v1/users/logout' do
   subject { delete '/api/v1/users/logout', headers: { 'Authorization' => token } }
 
   let!(:user) { create :user }
-  let(:valid_token) { 'Bearer valid.token.token' }
-  let(:invalid_token) { 'Bearer invalid.token.token' }
-  let(:jwt_secret) { Rails.application.secrets.jwt_secret }
-  let(:jwt_payload) { [{ 'id' => user.id, 'jti' => 'sample_jti' }] }
-  let(:allow_jwt_parser) do
-    allow(JWT).to receive(:decode).with(valid_token.split(' ').second, jwt_secret).and_return(jwt_payload)
-    allow(JWT).to receive(:decode).with(invalid_token.split(' ').second, jwt_secret).and_raise(JWT::VerificationError)
-  end
+
+  include_context 'tokens_utility'
 
   context 'when invalid token provided' do
     let(:token) { invalid_token }

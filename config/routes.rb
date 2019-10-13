@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   end
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get 'exhibitions/index', to: 'exhibitions#index'
-      # we don't need other dvise enpoints for now
+      get 'exhibitions', to: 'exhibitions#index'
+      # we don't need other devise enpoints for now
       post 'users/login', action: :create, controller: 'sessions'
       delete 'users/logout', action: :destroy, controller: 'sessions'
     end

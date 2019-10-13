@@ -22,8 +22,8 @@ gem 'puma', '~> 3.11'
 
 # Gems used for authentication
 gem 'devise'
-gem 'devise-jwt'
 gem 'jbuilder', '~> 2.5'
+gem 'jwt'
 
 # gem used for mockking
 gem 'factory_bot_rails'
